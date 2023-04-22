@@ -1,33 +1,78 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 #include <date/date.h>
 #include <nlohmann/json.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
+
 
 #include "internship.h"
 
 using json = nlohmann::json;
-using namespace date;
+using namespace boost;
 
 namespace internship {
-    // remove this function before submitting your solution
-    void example(const std::string& jsonFileName) {
+
+    long getDaysBetweenDates(std::string date1, std::string date2){
+        try{
+            gregorian::date d1(gregorian::from_simple_string(date1));
+            gregorian::date d2(gregorian::from_simple_string(date2));
+            gregorian::date_period dp(d1, d2);
+            return abs(dp.length().days())+1;       
+        }catch(...){
+            throw std::runtime_error("Error parsing dates");
+        }    
+    }
+
+    bool versionComparator(json j1, json j2){
+        try{
+            long d1 = j1["days"].get<long>();
+            long d2 = j2["days"].get<long>();
+            return d1 > d2;
+        }catch(...){
+            throw std::runtime_error("Days field is nan");
+        }
+    }
+
+    void findLongestSupport(const std::string jsonFileName, int elementsCount){
         std::ifstream f(jsonFileName);
         json data = json::parse(f);
 
-        std::cout << "Dynatrace Gdansk Summer Internship 2023\n"
-                    << "UTC time now: " << std::chrono::system_clock::now() << "\n\n";
+        std::vector<json> products;
 
         for(const auto& [id, product] : data.items()) {
-            std::cout << "Product name: " << product["name"] << "\n";
+            if(product["os"] == true){
+                for(json version : product["versions"]){
+                    json j;  
+                    try{
+                        j["osName"] = product["name"];
+                        j["cycle"]=version["cycle"];
+                        j["days"]=getDaysBetweenDates(version["releaseDate"], version["eol"]);
+                    }catch(...){
+                        continue;
+                    }
+                    products.push_back(j);
+                }
+            }
+        }
+        sort(products.begin(), products.end(), [](const json j1, const json j2){
+            return versionComparator(j1, j2);
+        });
+        
+
+        for(int i=0; i<elementsCount; i++){
+            if(i>=products.size())
+                break;
+            json j = products[i];
+            std::cout<<j["osName"].get<std::string>()<<" "<<j["cycle"].get<std::string>()<<" "<<j["days"]<<"\n";
         }
     }
 
     // do not remove this function
     void solution(const std::string& jsonFileName, int elementsCount) {
-        example(jsonFileName); // remove this call before submitting your solution
-
         // put the call to your solution here
+        findLongestSupport(jsonFileName, elementsCount);
     }
 }

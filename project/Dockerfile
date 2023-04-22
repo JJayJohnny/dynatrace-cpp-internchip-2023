@@ -34,3 +34,4 @@ WORKDIR /usr/src/internship_task
 #############
 # Run the program
 CMD ["sh", "entrypoint.sh"]
+
