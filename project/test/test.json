@@ -1,0 +1,39 @@
+[{
+    "name": "operatingSystem1",
+    "os": true,
+    "versions": [
+      {
+        "cycle": "9",
+        "releaseDate": "2022-05-26",
+        "eol": "2022-05-31"
+      },
+      {
+        "cycle": "8",
+        "releaseDate": "2021-03-01",
+        "eol": "2021-03-01"
+      }
+    ]
+  },
+  {
+    "name": "operatingSystem2",
+    "os": true,
+    "versions": [
+      {
+        "cycle": "9",
+        "releaseDate": "2022-05-26",
+        "eol": "2022-05-29"
+      }
+    ]
+  },
+  {
+    "name": "operatingSystem3",
+    "os": false,
+    "versions": [
+      {
+        "cycle": "22",
+        "releaseDate": "2022-05-26",
+        "eol": "2022-05-29"
+      }
+    ]
+  }
+]

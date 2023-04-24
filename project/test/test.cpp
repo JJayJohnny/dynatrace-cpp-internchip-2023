@@ -70,6 +70,16 @@ TEST(VersionComparatorTest, HandlesWrongData){
     }
 }
 
+TEST(findLongestSupportedOSTest, HandlesPositiveInput){
+    
+    std::vector<nlohmann::json_abi_v3_11_2::json> result = internship::findLongestSupportedOS("test.json", 3);
+    EXPECT_EQ(result[0]["osName"].get<std::string>(), "operatingSystem1");
+    EXPECT_EQ(result[0]["cycle"].get<std::string>(), "9");
+    EXPECT_EQ(result[0]["days"], 5);
+
+}
+
+//TODO tests for findLongestSupportedOS function
 
 int main(int argc, char **argv){
     ::testing::InitGoogleTest(&argc, argv);

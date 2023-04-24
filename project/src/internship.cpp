@@ -36,7 +36,7 @@ namespace internship {
         }
     }
 
-    void findLongestSupport(const std::string jsonFileName, int elementsCount){
+    std::vector<json> findLongestSupportedOS(const std::string jsonFileName, int elementsCount){
         std::ifstream f(jsonFileName);
         json data = json::parse(f);
 
@@ -61,10 +61,18 @@ namespace internship {
             return versionComparator(j1, j2);
         });
         
+        if(elementsCount > products.size())
+            elementsCount = products.size();
 
-        for(int i=0; i<elementsCount; i++){
-            if(i>=products.size())
-                break;
+        std::vector<json> result = {products.begin(), products.begin()+elementsCount};
+
+        return result;
+    }
+
+    void internshipTask(const std::string jsonFileName, int elementsCount){
+        std::vector<json> products = findLongestSupportedOS(jsonFileName, elementsCount);
+
+        for(int i=0; i<products.size(); i++){
             json j = products[i];
             std::cout<<j["osName"].get<std::string>()<<" "<<j["cycle"].get<std::string>()<<" "<<j["days"]<<"\n";
         }
@@ -73,6 +81,6 @@ namespace internship {
     // do not remove this function
     void solution(const std::string& jsonFileName, int elementsCount) {
         // put the call to your solution here
-        findLongestSupport(jsonFileName, elementsCount);
+        internshipTask(jsonFileName, elementsCount);
     }
 }
