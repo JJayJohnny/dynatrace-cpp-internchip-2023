@@ -47,6 +47,10 @@ namespace internship {
                 for(json version : product["versions"]){
                     json j;  
                     try{
+                        if(!product.contains("name") || !product["name"].is_string() ||  product["name"] == "")
+                            continue;
+                        if(!version.contains("cycle") || !version["cycle"].is_string() || version["cycle"] == "")
+                            continue;
                         j["osName"] = product["name"];
                         j["cycle"]=version["cycle"];
                         j["days"]=getDaysBetweenDates(version["releaseDate"], version["eol"]);
