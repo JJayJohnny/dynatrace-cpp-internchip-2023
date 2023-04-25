@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $TEST ]
+if [ "$TEST" = true ]
 then
 # Compiling for tests
 rm -rf test/out/*
@@ -16,7 +16,6 @@ sh -c "test/out/result"
 else
 # Create build directory
 mkdir -p build
-
 # Clean up the build directory
 rm -rf build/*
 # Use GCC to compile the main.cpp and internship.cpp source files with include path to VCPKG installer libraries

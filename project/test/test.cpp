@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
+#include <vector>
 #include "../src/internship.h"
 
 TEST(DateDifferenceTest, HandlesPositiveInput){
@@ -72,11 +73,25 @@ TEST(VersionComparatorTest, HandlesWrongData){
 
 TEST(findLongestSupportedOSTest, HandlesPositiveInput){
     
-    std::vector<nlohmann::json_abi_v3_11_2::json> result = internship::findLongestSupportedOS("test.json", 3);
+    std::vector<nlohmann::json_abi_v3_11_2::json> result = internship::findLongestSupportedOS("test/test.json", 3);
+    EXPECT_EQ(result.size(), 3);
     EXPECT_EQ(result[0]["osName"].get<std::string>(), "operatingSystem1");
     EXPECT_EQ(result[0]["cycle"].get<std::string>(), "9");
-    EXPECT_EQ(result[0]["days"], 5);
+    EXPECT_EQ(result[0]["days"], 6);
+    EXPECT_EQ(result[1]["osName"].get<std::string>(), "operatingSystem2");
+    EXPECT_EQ(result[1]["cycle"].get<std::string>(), "9");
+    EXPECT_EQ(result[1]["days"], 4);
+    EXPECT_EQ(result[2]["osName"].get<std::string>(), "operatingSystem1");
+    EXPECT_EQ(result[2]["cycle"].get<std::string>(), "8");
+    EXPECT_EQ(result[2]["days"], 1);
 
+}
+
+TEST(findLongestSupportedOSTest, HandlesNegativeInput){
+    std::vector<nlohmann::json_abi_v3_11_2::json> result = internship::findLongestSupportedOS("test/test.json", 10);
+    EXPECT_EQ(result.size(), 3);
+    result = internship::findLongestSupportedOS("test/test.json", 0);
+    EXPECT_EQ(result.size(), 0);
 }
 
 //TODO tests for findLongestSupportedOS function
