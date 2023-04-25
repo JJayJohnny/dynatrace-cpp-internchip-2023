@@ -44,11 +44,11 @@ namespace internship {
 
         for(const auto& [id, product] : data.items()) {
             if(product["os"] == true){
+                if(!product.contains("name") || !product["name"].is_string() ||  product["name"] == "")
+                            continue;
                 for(json version : product["versions"]){
                     json j;  
                     try{
-                        if(!product.contains("name") || !product["name"].is_string() ||  product["name"] == "")
-                            continue;
                         if(!version.contains("cycle") || !version["cycle"].is_string() || version["cycle"] == "")
                             continue;
                         j["osName"] = product["name"];
