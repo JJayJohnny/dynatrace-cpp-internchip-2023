@@ -61,9 +61,11 @@ namespace internship {
             return versionComparator(j1, j2);
         });
         
+        if(elementsCount < 0)
+            elementsCount = 0;
         if(elementsCount > products.size())
             elementsCount = products.size();
-
+        
         std::vector<json> result = {products.begin(), products.begin()+elementsCount};
 
         return result;

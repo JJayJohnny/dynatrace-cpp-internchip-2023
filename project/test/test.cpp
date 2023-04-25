@@ -92,6 +92,8 @@ TEST(findLongestSupportedOSTest, HandlesNegativeInput){
     EXPECT_EQ(result.size(), 3);
     result = internship::findLongestSupportedOS("test/test.json", 0);
     EXPECT_EQ(result.size(), 0);
+    result = internship::findLongestSupportedOS("test/test.json", -5);
+    EXPECT_EQ(result.size(), 0);
 }
 
 //TODO tests for findLongestSupportedOS function
